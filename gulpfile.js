@@ -8,31 +8,35 @@ var uglify = require('gulp-uglify');
 
 
 gulp.task('css', function () {
-            gulp.src(['./src/css/*.css'])
-                .pipe(autoprefixer({
-                    browsers: ['last 10 versions'],
-                    cascade: false
-                })).pipe(cleanCSS({
-                    compatibility: 'ie8'
-                }))
+    gulp.src(['./src/css/*.css'])
+        .pipe(autoprefixer({
+            browsers: ['last 10 versions'],
+            cascade: false
+        })).pipe(cleanCSS({
+            compatibility: 'ie8'
+        }))
 
-                .pipe(gulp.dest('./dist/css/'))
+        .pipe(gulp.dest('./dist/css/'))
 
-            });
+});
 
-            gulp.task('images', function () {
-                gulp.src('./src/images/*')
-                    .pipe(imagemin())
-                    .pipe(gulp.dest('./dist/images'))
-            });
+gulp.task('images', function () {
+    gulp.src('./src/images/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('./dist/images'))
+});
 
-            gulp.task('js', function () {
-                gulp.src('./src/js/*.js')
-                    .pipe(babel({
-                        presets: ['env']
-                    }))
-                    .pipe(concat('main.js'))
-                    .pipe(uglify())
+gulp.task('js', function () {
+    gulp.src('./src/js/*.js')
+        .pipe(babel({
+            presets: ['env']
+        }))
+        .pipe(concat('main.js'))
+        .pipe(uglify())
 
-                    .pipe(gulp.dest('./dist/js/'))
-            })
+        .pipe(gulp.dest('./dist/js/'))
+})
+
+gulp.task('watch', ['css', 'js', 'images'], function () {
+    gulp.watch('./src/css/*css', ['css']);
+});
